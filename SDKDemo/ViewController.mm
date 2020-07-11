@@ -29,7 +29,6 @@
     s32 userHandle = Yoseen_Login(&loginInfo, &basicInfo);
 
     // start temperature stream transport.
-    // construct an instance of YoseenPreviewInfo
     YoseenPreviewInfo previewInfo = {};
     // Set the DataType to temperature stearm
     previewInfo.DataType = xxxdatatype_temp;
@@ -53,13 +52,24 @@
 // The parameters of this function should be as shown here.
 void StaticPreviewCallback(s32 errorCode, DataFrame *dataFrame,
                                          void *customData) {
-    if (errorCode == YET_None) {
-        // Get the DataFrameHeader pointer from this dataFrame
+    if (YET_None == errorCode) {
+        // Get the DataFrameHeader pointer of this frame
         DataFrameHeader *dfh = (DataFrameHeader *)dataFrame->Head;
-        // Get the frame index from this DataFrameHeader
+        // Get the index of this frame
         NSString *ValueString = [NSString stringWithFormat:@"%d", dfh->Index];
         // Print the frame index in Console
         NSLog(ValueString, nil);
+        
+        // Get the bmp data of this frame
+        bgra *bmpInfo = (bgra *)dataFrame->Bmp;
+        
+        // Get the temperature data of this frame
+        s16 *tempData = (s16 *)dataFrame->Temp;
+        
+    } else if(YET_PreviewRecoverBegin == errorCode) {
+        // reconnect begins
+    } else if(YET_PreviewRecoverEnd == errorCode) {
+        // reconnect ends
     }
 }
 
