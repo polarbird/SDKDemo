@@ -70,3 +70,5 @@ void StaticPreviewCallback(s32 errorCode, DataFrame *dataFrame,
 @end
 
 ```
+# Sceenshot
+![Image text](https://raw.githubusercontent.com/polarbird/SDKDemo/master/doc/screenshot.png)
