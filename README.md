@@ -60,15 +60,23 @@ void StaticPreviewCallback(s32 errorCode, DataFrame *dataFrame,
         // Get the DataFrameHeader pointer of this frame
         DataFrameHeader *dfh = (DataFrameHeader *)dataFrame->Head;
         // Get the index of this frame
-        NSString *ValueString = [NSString stringWithFormat:@"%d", dfh->Index];
+        // NSString *ValueString = [NSString stringWithFormat:@"%d", dfh->Index];
         // Print the frame index in Console
-        NSLog(ValueString, nil);
+        // NSLog(ValueString, nil);
         
         // Get the bmp data of this frame
         bgra *bmpInfo = (bgra *)dataFrame->Bmp;
         
         // Get the temperature data of this frame
         s16 *tempData = (s16 *)dataFrame->Temp;
+        
+        //Print float in Celsius
+        u16 slope =dfh->Slope;
+        s16 offset = dfh->Offset;
+        s16 tempShort = *tempData;
+        float tempFloat = tempShort / slope + offset;
+        NSString *tempFloatString = [NSString stringWithFormat:@"%f", tempFloat];
+        NSLog(tempFloatString, nil);
         
     } else if(YET_PreviewRecoverBegin == errorCode) {
         // reconnect begins
@@ -79,7 +87,7 @@ void StaticPreviewCallback(s32 errorCode, DataFrame *dataFrame,
 
 @end
 
-
 ```
 # Sceenshot
-![Screenshot](https://raw.githubusercontent.com/polarbird/SDKDemo/master/doc/screenshot.png)
+![Screenshot_1](/doc/screenshot_1.png)
+![Screenshot_2](/doc/screenshot_2.png)
