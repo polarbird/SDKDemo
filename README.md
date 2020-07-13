@@ -70,7 +70,7 @@ void StaticPreviewCallback(s32 errorCode, DataFrame *dataFrame,
         // Get the temperature data of this frame
         s16 *tempData = (s16 *)dataFrame->Temp;
         
-        //Print float in Celsius
+        // Print float value of Celsius
         u16 slope =dfh->Slope;
         s16 offset = dfh->Offset;
         s16 tempShort = *tempData;
@@ -89,5 +89,7 @@ void StaticPreviewCallback(s32 errorCode, DataFrame *dataFrame,
 
 ```
 # Sceenshot
+## Print index of this frame
 ![Screenshot_1](/doc/screenshot_1.png)
+## Print float value of Celsius
 ![Screenshot_2](/doc/screenshot_2.png)
