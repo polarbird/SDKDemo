@@ -8,7 +8,7 @@
 
 #import "ViewController.h"
 #import "YoseenSDK.h"
-
+#import "libTBTN.h"
 
 @interface ViewController ()
 
@@ -44,6 +44,10 @@
     NSLog(ValueString, nil);
     
     // Do any additional setup after loading the view.
+    
+    TBTNContext* ctx= tbtnCreate();
+    ValueString = [NSString stringWithFormat:@"tbtn ctx %x", ctx];
+    NSLog(ValueString, nil);
 }
 
 

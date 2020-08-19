@@ -64,6 +64,7 @@
 		785332AC24B0818E0043C013 /* SDKDemoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SDKDemoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		785332B024B0818E0043C013 /* SDKDemoUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SDKDemoUITests.m; sourceTree = "<group>"; };
 		785332B224B0818E0043C013 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7876263824ECC5260092F769 /* libTBTN.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = libTBTN.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +102,7 @@
 				7804C6D724B0A87C001D3FA6 /* YoseenAlg.h */,
 				7804C6D824B0A87C001D3FA6 /* YoseenFile.h */,
 				7804C6D924B0A87C001D3FA6 /* YoseenTypes.h */,
+				7876263824ECC5260092F769 /* libTBTN.h */,
 			);
 			path = vendor;
 			sourceTree = "<group>";
