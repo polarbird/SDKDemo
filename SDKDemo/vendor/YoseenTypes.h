@@ -401,22 +401,26 @@ typedef struct _Ctl{
 控制X类型
 */
 enum CtlXType {
-	CtlXType_GetTime = 0,	///< 获取设备时间, UTC
-	CtlXType_SetTime,		///< 设置设备仪时间, UTC
-	CtlXType_GetGear,		///< 获取测温档位
-	CtlXType_SetGear,		///< 设置测温档位
-	CtlXType_AutoFocus,		///< 自动对焦
+    CtlXType_GetTime = 0,    ///< 获取设备时间, UTC
+    CtlXType_SetTime,        ///< 设置设备仪时间, UTC
+    CtlXType_GetGear,        ///< 获取测温档位
+    CtlXType_SetGear,        ///< 设置测温档位
+    CtlXType_AutoFocus,        ///< 自动对焦
 
-	//add20180921
-	CtlXType_XfGetConfig,	///< 位置记忆电动镜头, 获取配置
-	CtlXType_XfSetConfig,	///< 位置记忆电动镜头, 设置配置,
-	CtlXType_XfGetCur,		///< 位置记忆电动镜头, 获取位置
-	CtlXType_XfMove,		///< 位置记忆电动镜头, 设置位置
-	//CtlXType_XfReset,
-	//CtlXType_XfCheckDelta,
+    //add20180921
+    CtlXType_XfGetConfig,    ///< 位置记忆电动镜头, 获取配置
+    CtlXType_XfSetConfig,    ///< 位置记忆电动镜头, 设置配置,
+    CtlXType_XfGetCur,        ///< 位置记忆电动镜头, 获取位置
+    CtlXType_XfMove,        ///< 位置记忆电动镜头, 设置位置
+    CtlXType_XfReset,
+    CtlXType_XfCheckDelta,
 
-	//
-	CtlXType_SetGpioOutput = 128,
+    CtlXType_GetExtBbConfig,        ///< 获取外置黑体校正参数
+    CtlXType_SetExtBbConfig,        ///< 设置外置黑体校正参数
+
+    CtlXType_SyncNTP,                ///< 手动与NTP服务器同步时间
+    //
+    CtlXType_SetGpioOutput = 128,
 };
 
 /*
@@ -438,6 +442,19 @@ typedef struct _xxxgpiooutput {
 	s32 value;
 }xxxgpiooutput;
 
+/*
+外置黑体校正参数
+*/
+typedef struct _ExtBbConfig {
+    u16 enable;            ///< 开启
+    s16 temp;            ///< 黑体温度, 单位: 0.1摄氏度
+    u16 x;                ///< 黑体中心X
+    u16 y;                ///< 黑体中心Y
+    u16 radius;            ///< 黑体中心半径, 1代表取3x3区域
+
+    u8 pad[18];
+}ExtBbConfig;
+
 /**
 控制操作
 */
@@ -453,6 +470,7 @@ typedef struct _CtlX {
 		s32			XfMove;				///< 位置记忆电动镜头, 位置-刻度值, [0-100]
 		s32			XfCurType;			///< 位置记忆电动镜头, 0-计数值, 1-刻度值
 		xxxgpiooutput	GpioOutput;
+        ExtBbConfig        BbConfig;        ///< 外置黑体校正参数
 	}Data;
 }CtlX;
 

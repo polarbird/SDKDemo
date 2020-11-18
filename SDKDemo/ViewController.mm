@@ -24,7 +24,7 @@
 
     //login camera
     YoseenLoginInfo loginInfo = {};
-    strcpy(loginInfo.CameraAddr, "192.168.1.60");
+    strcpy(loginInfo.CameraAddr, "192.168.1.64");
     CameraBasicInfo basicInfo = {};
     s32 userHandle = Yoseen_Login(&loginInfo, &basicInfo);
 
@@ -48,6 +48,26 @@
 //    TBTNContext* ctx= tbtnCreate();
 //    ValueString = [NSString stringWithFormat:@"tbtn ctx %x", ctx];
 //    NSLog(ValueString, nil);
+    
+    
+    CtlX ctlx = {};
+    s32 ret;
+    ExtBbConfig& bbConfig = ctlx.Data.BbConfig;
+    
+    //Get hsrp config
+    ctlx.Type = CtlXType_GetExtBbConfig;
+    ret = Yoseen_SendControlX(userHandle, &ctlx);
+    printf("enable %d, x %d, y %d, radius %d, temp %d [0.1℃]\n", bbConfig.enable, bbConfig.x, bbConfig.y, bbConfig.radius, bbConfig.temp);
+    
+    //set hsrp config
+    ctlx.Type = CtlXType_SetExtBbConfig;
+    bbConfig.x = 192; // 0<x<384, !!!left-top is infrared-image origin, with no transform.
+    bbConfig.y = 144; // 0<y<288
+    bbConfig.radius = 1;
+    bbConfig.temp = 360; //360*0.1 = 36℃, !!!unit is 0.1℃
+    bbConfig.enable = 1; //1 enable, 0 disable, !!! all args must be valid, even if you only want to disable hsrp
+    ret = Yoseen_SendControlX(userHandle, &ctlx);
+    printf("Yoseen_SendControlX returns %d", ret);
 }
 
 
@@ -74,48 +94,48 @@ void StaticPreviewCallback(s32 errorCode, DataFrame *dataFrame,
         u16 slope =dfh->Slope;
         s16 offset = dfh->Offset;
         s16 tempShort = *tempData;
-        float tempFloat = tempShort / slope + offset;
-        NSString *tempFloatString = [NSString stringWithFormat:@"%f", tempFloat];
-        NSLog(tempFloatString, nil);
+//        float tempFloat = tempShort / slope + offset;
+//        NSString *tempFloatString = [NSString stringWithFormat:@"%f", tempFloat];
+//        NSLog(tempFloatString, nil);
         
         
         //create alg, set config
-        TBTNContext* ctx = tbtnCreate();
-        TBTNConfig config = {};
-
-        config.alarmTemp0 = 37.2f;
-        config.alarmTemp1 = 42.0f;
-        config.alarmType = XXXAlarmType_Max;
-
-        config.cvtEnable = 1;
-        config.cvtDelta = 0.5f;
-        config.cvtFromMin = 31.0f;
-        config.cvtToMin = 35.5f;
-        config.cvtToMax = 36.5f;
-        s32 ret1 = tbtnSetConfig(ctx, &config);
+//        TBTNContext* ctx = tbtnCreate();
+//        TBTNConfig config = {};
+//
+//        config.alarmTemp0 = 37.2f;
+//        config.alarmTemp1 = 42.0f;
+//        config.alarmType = XXXAlarmType_Max;
+//
+//        config.cvtEnable = 1;
+//        config.cvtDelta = 0.5f;
+//        config.cvtFromMin = 31.0f;
+//        config.cvtToMin = 35.5f;
+//        config.cvtToMax = 36.5f;
+//        s32 ret1 = tbtnSetConfig(ctx, &config);
 
         /*
         we DON'T detect faces, you NEED to implement.
         we JUST measure the faces for you.
         */
-        TBTNOutput output = {};
-        output.inputMeasureCount = 1;
-        XXXMea& mea = output.inputMeaArray[0];
-        mea.x0 = 50;
-        mea.x1 = 100;
-        mea.y0 = 60;
-        mea.y1 = 160;
+//        TBTNOutput output = {};
+//        output.inputMeasureCount = 1;
+//        XXXMea& mea = output.inputMeaArray[0];
+//        mea.x0 = 50;
+//        mea.x1 = 100;
+//        mea.y0 = 60;
+//        mea.y1 = 160;
 
-        s32 ret2 = tbtnExecute(ctx, dfh, tempData, &output);
+//        s32 ret2 = tbtnExecute(ctx, dfh, tempData, &output);
         
-        NSLog(@"tbtn output: ", nil);
-        NSString *gMaxTempString = [NSString stringWithFormat:@"%f", output.gmaxTemp];
-        NSLog(gMaxTempString, nil);
+//        NSLog(@"tbtn output: ", nil);
+//        NSString *gMaxTempString = [NSString stringWithFormat:@"%f", output.gmaxTemp];
+//        NSLog(gMaxTempString, nil);
         
         
 
         //free alg
-        tbtnFree(&ctx);
+//        tbtnFree(&ctx);
         
         
     } else if(YET_PreviewRecoverBegin == errorCode) {
